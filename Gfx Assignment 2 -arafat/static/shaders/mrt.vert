@@ -16,7 +16,7 @@ uniform mat4 VP;
 
 void main(){
     vec4 world = M * vec4(position, 1.0f);
-    vec4 prevWorld = M * vec4(position, 1.0f);
+    vec4 prevWorld = prevM * vec4(position, 1.0f);
     v_motion = world - prevWorld;
     gl_Position = VP * world; 
     v_color = color;
