@@ -7,8 +7,8 @@ layout(location=1) in vec4 color;
 layout(location=2) in vec2 texcoord;
 
 out vec4 v_color;
-out vec4 v_motion;
 out vec2 v_texcoord;
+out vec4 v_motion;
 
 uniform mat4 M;
 uniform mat4 prevM;

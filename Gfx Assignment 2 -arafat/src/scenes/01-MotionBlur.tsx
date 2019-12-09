@@ -221,7 +221,7 @@ export default class MotionBlurScene extends Scene {
                 let obj = this.objects[key];
                 //TODO: Add any uniforms you need here
                 program.setUniformMatrix4fv("M", false, obj.currentModelMatrix); // Send the model matrix of the object in the current frame
-                program.setUniformMatrix4fv("prevM", false, obj.previousModelMatrix); // Send the prev model matrix of the object in the current frame
+                program.setUniformMatrix4fv("prevM", false, obj.previousModelMatrix); // Send the model matrix of the object in the current frame
                 program.setUniform4f("tint", obj.tint); // Send the color tint
                 this.gl.activeTexture(this.gl.TEXTURE0); // Bind the texture and sampler to unit 0
                 this.gl.bindTexture(this.gl.TEXTURE_2D, obj.texture);
@@ -242,9 +242,9 @@ export default class MotionBlurScene extends Scene {
                 let program = this.programs['motion-blur'];
                 program.use();
                 //TODO: Add any uniforms you need
-                program.setUniformMatrix4fv("VP", false, this.camera.ViewProjectionMatrix); 
-                program.setUniformMatrix4fv("prevVP", false, this.VP_prev); 
                 this.gl.activeTexture(this.gl.TEXTURE0);
+                program.setUniformMatrix4fv("currVP", false, this.camera.ViewProjectionMatrix);
+                program.setUniformMatrix4fv("prevVP", false, this.VP_prev);
                 this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures['color-target']);
                 program.setUniform1i('color_sampler', 0);
                 this.gl.bindSampler(0, this.samplers['postprocess']);
@@ -255,7 +255,11 @@ export default class MotionBlurScene extends Scene {
                 this.gl.activeTexture(this.gl.TEXTURE2);
                 this.gl.bindTexture(this.gl.TEXTURE_2D, this.textures['motion-target']);
                 program.setUniform1i('motion_sampler', 2);
-                this.gl.bindSampler(1, this.samplers['postprocess']);
+                this.gl.bindSampler(2, this.samplers['postprocess']);
+               
+
+
+
                 this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
             } else { // If motion blur is disabled, we just blit the color target to full screen
                 let program = this.programs['blit'];

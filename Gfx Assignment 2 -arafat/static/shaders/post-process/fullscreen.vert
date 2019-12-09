@@ -9,13 +9,11 @@ const vec3 vertices[3] = vec3[3](
 // Note that the vertex coordinates exceed the NDC limits (-1 to 1) since we need to use only one triangle to cover the whole screen
 
 out vec2 v_screencoord; // The texture coordinates of the screen (bottom-left 0,0 ... top-right 1,1)
-out vec3 v_NDC;
 
 void main(){
     // Pick a vertex from the constant array and send it.
     vec3 vertex = vertices[gl_VertexID];
     gl_Position = vec4(vertex, 1.0f);
-    v_NDC = vertex;
     v_screencoord = 0.5 * (vertex.xy + 1.0); // remapping the NDC from [-1, 1] to [0, 1] will give us the screen texture coordinates
 }
 
