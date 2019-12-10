@@ -268,8 +268,8 @@ export default class MotionBlurScene extends Scene {
 
                 program.setUniformMatrix4fv("VPCurr", false, this.camera.ViewProjectionMatrix);
                 program.setUniformMatrix4fv("VCurr_i", false, mat4.invert(mat4.create(), this.camera.ViewMatrix ));
-                program.setUniformMatrix4fv("VPPrev", false, mat4.invert(mat4.create(), this.V_prev));
-                program.setUniformMatrix4fv("VPrev_i", false, this.V_prev);
+                program.setUniformMatrix4fv("VPPrev", false, this.VP_prev);
+                program.setUniformMatrix4fv("VPrev_i", false, mat4.invert(mat4.create(), this.V_prev ));
 
                 this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
             } else { // If motion blur is disabled, we just blit the color target to full screen

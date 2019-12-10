@@ -26,12 +26,12 @@ void main(){
                                                                                                               
     float depth = texture(depth_sampler, v_screencoord).x;                                                     
     vec3 pixalPosNDC = vec3(2.0*v_screencoord.x-1.0, 2.0*v_screencoord.y-1.0, 2.0*depth-1.0) ;            
-    vec4 pixelPosClip = P_matPrev_i * vec4(pixalPosNDC , 1.0);                                                                     
+    vec4 pixelPosClip = P_i * vec4(pixalPosNDC , 1.0);                                                                     
     vec3 pixelPosCam = pixelPosClip.xyz / pixelPosClip.w;
-    vec3 PixelWorldPos = (inverse(VPrev_i)* vec4(pixelPosCam , 1.0) ).xyz;
+    vec3 PixelWorldPos = (VCurr_i* vec4(pixelPosCam , 1.0) ).xyz;
 
     vec3 PixelWorldPosPrev = PixelWorldPos - motionVec.xyz;
-    vec3 pixalCamPosPrev = (VPrev_i * vec4(PixelWorldPosPrev , 1.0)).xyz;
+    vec3 pixalCamPosPrev = (inverse(VPrev_i) * vec4(PixelWorldPosPrev , 1.0)).xyz;
     vec4 pixalPosClipPrev = inverse(P_matPrev_i) * vec4(pixalCamPosPrev , 1.0);
     vec3 pixalposNDCPrev = pixalPosClipPrev.xyz / pixalPosClipPrev.w;
 
